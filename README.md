@@ -73,7 +73,10 @@ The requirements for this feature are:
 Please add your answers to the questions below:
 
 1. How long did you spend on this challenge?
+    I must confess, the the second two tasks were not difficult for me. Those two took about 1 hour and a half. I spent the    rest of my time trying to debug the DateTime issue and cannot find a solution as I surprass the 4 hour limit! I submit my challenge without a solution for Step 1. 
 2. In your opinion, what are features that Double could work on that would be helpful for assistants when managing agendas?
+    Im not entirely sure how Double updates Agendas, but perhaps adding real time editing would be a nice feature? Similar to how google shared docs works.  I think it would be a great way to provide fast calender updates and communication between assistant and user.
 3. If you had more time, what would you add or change in the codebase? 
+    I really enjoy the codebase and file structure. Easy to follow, not overflowing with uneccesary files/folders. It is similar to how I would create an application! If I were to change a few things, I would consolidate the @computed and @actions functions into their relative Model files for better organization.
 4. Do you have any constructive feedback that you would like to share with our team?
-
+    The Double team has created great product lead by a skilled team of technology enthusiasts whom I woudl enjoy working with and learning from. 
