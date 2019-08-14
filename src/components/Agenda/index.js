@@ -11,6 +11,7 @@ import type Account from 'src/models/Account'
 
 import List from './List'
 import EventCell from './EventCell'
+import DropdownMenu from './DropdownMenu'
 
 import style from './style'
 
@@ -27,6 +28,15 @@ type tProps = {
 @inject('account')
 @observer
 class Agenda extends Component<tProps> {
+
+  state = {
+    calendars: []
+  };
+
+  componentWillMount() {
+    const { calendars } = this.props.account;
+    this.setState({ calendars: [...calendars] })
+  }
   /**
    * Return events from all calendars, sorted by date-time.
    * Returned objects contain both Event and corresponding Calendar
@@ -47,7 +57,20 @@ class Agenda extends Component<tProps> {
     return events
   }
 
+  _filterCalenders = (option) => {
+    const { calendars, groupByDeparment } = this.state;
+    this.setState({ groupByDeparment: false })
+
+    if(option === 'all') {
+      this.props.account.calendars.replace(calendars);
+    } else {
+      this.props.account.calendars.replace(calendars.filter((e) => e.id === option.id));
+    }
+  }
+
   render () {
+    const { calendars } = this.state;
+
     return (
       <div className={style.outer}>
         <div className={style.container}>
@@ -56,6 +79,10 @@ class Agenda extends Component<tProps> {
             <span className={style.title}>
               {greeting(DateTime.local().hour)}
             </span>
+            <DropdownMenu
+              options={this.state.calendars}
+              onClick={this._filterCalenders}
+            ></DropdownMenu>
           </div>
 
           <List>
