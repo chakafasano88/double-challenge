@@ -86,4 +86,4 @@ Please add your answers to the questions below:
     
 4. Do you have any constructive feedback that you would like to share with our team?
     
-    The Double team has created great product lead by a skilled team of technology enthusiasts whom I woudl enjoy working with and learning from. 
+    The Double team has created a great product lead by a skilled team of technology enthusiasts whom I would enjoy learning from and working alognside. 
