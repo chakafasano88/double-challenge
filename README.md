@@ -82,7 +82,7 @@ Please add your answers to the questions below:
     
 3. If you had more time, what would you add or change in the codebase? 
     
-    I really enjoy the codebase and file structure. Easy to follow, not overflowing with uneccesary files/folders. It is similar to how I would create an application! If I were to change a few things, I would consolidate the @computed and @actions functions into their relative Model files for better organization.
+    I really enjoy the codebase and file structure. Easy to follow, not overflowing with uneccesary files/folders, and I agree with separate style sheets for each file. It is similar to how I would create an application! If I were to change a few things, I would consolidate the @computed and @actions functions into their relative Model files for better organization.
     
 4. Do you have any constructive feedback that you would like to share with our team?
     
