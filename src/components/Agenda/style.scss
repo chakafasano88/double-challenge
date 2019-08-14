@@ -34,3 +34,32 @@
   @include title-text;
   color: $blackColor;
 }
+
+.subHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 16px 16px 12px 16px;
+}
+
+.card {
+  position: relative;
+  border-radius: 8px;
+  padding: 10px 90px;
+  z-index: 10;
+  background: $lightGrayColor;
+  overflow: hidden;
+
+  flex: 1 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  span {
+    font-size: 18px;
+    letter-spacing: -0.308px;
+    line-height: 16px;
+    font-weight: 500;
+  }
+}

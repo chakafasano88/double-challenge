@@ -5,6 +5,8 @@ import { DateTime } from 'luxon'
 import { computed } from 'mobx'
 import { observer, inject } from 'mobx-react'
 
+import groupBy from 'lodash/groupBy'
+
 import greeting from 'lib/greeting'
 
 import type Account from 'src/models/Account'
@@ -12,6 +14,7 @@ import type Account from 'src/models/Account'
 import List from './List'
 import EventCell from './EventCell'
 import DropdownMenu from './DropdownMenu'
+import Toggle from './Toggle'
 
 import style from './style'
 
@@ -30,7 +33,9 @@ type tProps = {
 class Agenda extends Component<tProps> {
 
   state = {
-    calendars: []
+    calendars: [],
+    groupByDeparment: false,
+    grouped: []
   };
 
   componentWillMount() {
@@ -42,11 +47,11 @@ class Agenda extends Component<tProps> {
    * Returned objects contain both Event and corresponding Calendar
    */
   @computed
-  get events (): Array<{ calendar: Calendar, event: Event }> {
+  get events(): Array<{ calendar: Calendar, event: Event }> {
     const events = this.props.account.calendars
       .map((calendar) => (
         calendar.events.map((event) => (
-          { calendar, event }
+          { calendar, event, deparment: event.department }
         ))
       ))
       .flat()
@@ -61,15 +66,36 @@ class Agenda extends Component<tProps> {
     const { calendars, groupByDeparment } = this.state;
     this.setState({ groupByDeparment: false })
 
-    if(option === 'all') {
+    if (option === 'all') {
       this.props.account.calendars.replace(calendars);
     } else {
       this.props.account.calendars.replace(calendars.filter((e) => e.id === option.id));
     }
   }
 
-  render () {
-    const { calendars } = this.state;
+  _groupByDepartment = () => {
+    const { groupByDeparment } = this.state;
+    if (groupByDeparment) {
+      const grouped = groupBy(this.events, function (n) {
+        return n.event.department
+      });
+      this.setState({ grouped })
+    }
+  }
+
+  _toggleGrouping = () => {
+    const { groupByDeparment } = this.state;
+    this.setState({
+      groupByDeparment: !groupByDeparment
+    },
+      () => {
+        this._groupByDepartment();
+      });
+  }
+
+
+  render() {
+    const { calendars, grouped, groupByDeparment } = this.state;
 
     return (
       <div className={style.outer}>
@@ -84,13 +110,29 @@ class Agenda extends Component<tProps> {
               onClick={this._filterCalenders}
             ></DropdownMenu>
           </div>
+          <div className={style.subHeader}>
+            <Toggle
+              onChange={this._toggleGrouping}
+              checked={groupByDeparment}
+            />
+          </div>
 
           <List>
-            {this.events.map(({ calendar, event }) => (
+            {!groupByDeparment && this.events.map(({ calendar, event }) => (
               <EventCell key={event.id} calendar={calendar} event={event} />
             ))}
           </List>
 
+          <List>
+            {groupByDeparment && Object.keys(grouped).map((key, i) =>
+              <div key={i}>
+                <div className={style.card}><span>{key === 'undefined' ? 'Other' : key}</span></div>
+                {grouped[key].map(({ calendar, event }) => (
+                  <EventCell key={event.id} calendar={calendar} event={event} />
+                ))}
+              </div>
+            )}
+          </List>
         </div>
       </div>
     )
